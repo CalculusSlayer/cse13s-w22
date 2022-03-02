@@ -86,13 +86,13 @@ bool stack_compute_step(Stack *s, CalculatorItem item) {
 		  return false;
 	  }
 
-	  stack_pop(s, &num1);
+	  stack_pop(s, &num2);
 
 	  if (stack_empty(s)) {
 		  return false;
 	  }
 
-	  stack_pop(s, &num2);
+	  stack_pop(s, &num1);
 
 	  if (item.type == ADD) {
 		  CalculatorItem x = {NUMBER, num1.value+num2.value};
