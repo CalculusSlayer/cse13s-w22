@@ -14,7 +14,8 @@ int main(void) {
   int result;
 
   FILE* infile;
-  infile=fopen("input.txt", "r");
+  infile=fopen("test_cases/mixed", "r"); // Replace first quotation with whatever file
+  										 // you want to test or have as input.
 
 
   while((fgets(buf, BUFSIZE, infile) != NULL) &&
