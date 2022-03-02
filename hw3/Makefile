@@ -6,7 +6,6 @@ CC = clang
 # You'll need to uncomment this line once you're done with your code.
 CFLAGS = -Wall -Wpedantic -Werror -Wextra
 
-
 all: hw3
 
 hw3: hw3.o stack_calculator.o

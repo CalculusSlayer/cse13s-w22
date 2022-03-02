@@ -110,6 +110,10 @@ bool stack_compute_step(Stack *s, CalculatorItem item) {
 	  }
 
 	  else if (item.type == DIVIDE) {
+		  if (num2.value == 0) {
+			  return false;
+		  }
+
 		  CalculatorItem x = {NUMBER, num1.value/num2.value};
 		  stack_push(s, x);
 	  }
