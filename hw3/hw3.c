@@ -10,7 +10,7 @@
 int main(void) {
   char buf[BUFSIZE];
   FILE* infile;
-  infile=fopen("test_cases/default.txt", "r"); // Change filename to whatever you want to use.
+  infile=fopen("test_cases/divide_zero.txt", "r"); // Change filename to whatever you want to use.
   bool success;
   int linenum = 1;
 
