@@ -104,7 +104,7 @@ int main(void) {
 	}
 
 
-	printf("%zu words were read from student", num_words1); // 2309
+	printf("%zu words were read from student\n", num_words1); // 2309
 	printf("%s\n", list1[0]); // cigar
 	printf("%s\n", list1[2308]); // shave
 
