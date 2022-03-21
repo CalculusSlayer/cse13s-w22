@@ -73,6 +73,76 @@ int my_score_word(char *word, int *letter_scores) {
     return sum;
 }
 
+size_t my_filter_vocabulary_gray(char letter, char **vocabulary, size_t num_words) {
+
+    // TODO(you): implement this function!
+    size_t num = 0;
+
+    for (int word = 0; word < (int) num_words; word++) {
+        if (!*(vocabulary + word)) {
+            continue;
+        }
+
+        if (strchr(*(vocabulary + word), letter) != NULL) {
+            //printf("%s - grey - %c\n", vocabulary[word], letter);
+            free(*(vocabulary + word));
+            *(vocabulary + word) = NULL;
+            num += 1;
+        }
+    }
+
+    return num;
+}
+
+size_t my_filter_vocabulary_yellow(char letter, int position, char **vocabulary, size_t num_words) {
+
+    // TODO(you): implement this function!
+    size_t num = 0;
+
+    for (int word = 0; word < (int) num_words; word++) {
+        if (!*(vocabulary + word)) {
+            continue;
+        }
+
+        if (strchr(vocabulary[word], letter) == NULL) {
+            //printf("%s - yellow1 - %c\n", vocabulary[word], letter);
+            free(*(vocabulary + word));
+            *(vocabulary + word) = NULL;
+            num += 1;
+        }
+
+        else if (vocabulary[word][position] == letter) {
+            //printf("%s - yellow2 - %c\n", vocabulary[word], letter);
+            free(*(vocabulary + word));
+            *(vocabulary + word) = NULL;
+            num += 1;
+        }
+    }
+
+    return num;
+}
+
+size_t my_filter_vocabulary_green(char letter, int position, char **vocabulary, size_t num_words) {
+
+    // TODO(you): implement this function!
+    size_t num = 0;
+
+    for (int word = 0; word < (int) num_words; word++) {
+        if (!*(vocabulary + word)) {
+            continue;
+        }
+
+        if (vocabulary[word][position] != letter) {
+            //printf("%s - green - %c\n", vocabulary[word], letter);
+            free(*(vocabulary + word));
+            *(vocabulary + word) = NULL;
+            num += 1;
+        }
+    }
+
+    return num;
+}
+
 int main(void) {
 	//printf("This is a test.\n");
 	size_t num_words = 0;
@@ -99,16 +169,97 @@ int main(void) {
 	}
 
 	int *word_scores = (int *) malloc(sizeof(int) * num_words);
-	for (unsigned int i=0; i < 26; i++) {
+	for (unsigned int i=0; i < num_words; i++) {
 		*(word_scores+i) = score_word(voc[i], scores);
 	}
 
 	printf("****************** TESTING SCORE_WORD (2ND FUNC) *******************\n");
-	for (unsigned int i=0; i < 26; i++) {
+	for (unsigned int i=0; i < num_words; i++) {
 		if (my_score_word(voc[i], scores) != *(word_scores+i)) {
 			printf("Error at index: %u.\n", i);
 		}
 	}
+
+	free(scores);
+	scores = NULL;
+	free(word_scores);
+	word_scores = NULL;
+	
+	/*
+	FILE *gray1 *gray2;
+	fopen("gray1", "w+");
+	fopen("gray2", "w+");
+	*/
+
+	char **sol_voc1 = load_vocabulary("small_vocabulary.txt", &num_words);
+	filter_vocabulary_gray('a', voc, num_words);
+	my_filter_vocabulary_gray('a', sol_voc1, num_words);
+	printf("****************** TESTING gray (3RD FUNC) *******************\n");
+	for (unsigned int i=0; i < num_words; i++) {
+		if ((*(voc+i)) == NULL && (NULL == *(sol_voc1+i))) {
+			// do nothing
+		}
+		else if (strncmp(voc[i], sol_voc1[i], 5) == 0) {
+			// do nothing
+		}
+
+		else {
+			printf("Error at index: %u.\n", i);
+		}
+	}
+
+	free_vocabulary(voc, num_words);
+	voc = NULL;
+	free_vocabulary(sol_voc1, num_words);
+	sol_voc1 = NULL;
+
+	
+	voc = load_vocabulary("small_vocabulary.txt", &num_words);
+	sol_voc1 = load_vocabulary("small_vocabulary.txt", &num_words);
+	filter_vocabulary_yellow('a', 1, voc, num_words);
+	my_filter_vocabulary_yellow('a', 1, sol_voc1, num_words);
+	printf("****************** TESTING yellow (4th FUNC) *******************\n");
+	for (unsigned int i=0; i < num_words; i++) {
+		if ((*(voc+i)) == NULL && (NULL == *(sol_voc1+i))) {
+			// do nothing
+		}
+		else if (strncmp(voc[i], sol_voc1[i], 5) == 0) {
+			// do nothing
+		}
+
+		else {
+			printf("Error at index: %u.\n", i);
+		}
+	}
+
+	free_vocabulary(voc, num_words);
+	voc = NULL;
+	free_vocabulary(sol_voc1, num_words);
+	sol_voc1 = NULL;
+	
+	voc = load_vocabulary("small_vocabulary.txt", &num_words);
+	sol_voc1 = load_vocabulary("small_vocabulary.txt", &num_words);
+	filter_vocabulary_green('a', 1, voc, num_words);
+	my_filter_vocabulary_green('a', 1, sol_voc1, num_words);
+	printf("****************** TESTING green (5th FUNC) *******************\n");
+	for (unsigned int i=0; i < num_words; i++) {
+		if ((*(voc+i)) == NULL && (NULL == *(sol_voc1+i))) {
+			// do nothing
+		}
+		else if (strncmp(voc[i], sol_voc1[i], 5) == 0) {
+			// do nothing
+		}
+
+		else {
+			printf("Error at index: %u.\n", i);
+		}
+	}
+
+	free_vocabulary(voc, num_words);
+	voc = NULL;
+	free_vocabulary(sol_voc1, num_words);
+	sol_voc1 = NULL;
+
 
 	/*
 	int w1, w2, w3, w4;
